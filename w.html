@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>欢迎光临</title>
+    <script>
+        window.onload = function () {
+            function get(name) {
+                const parts = window.location.href.split('?');
+                if (parts.length > 1) {
+                    name = encodeURIComponent(name);
+                    const params = parts[1].split('&');
+                    const found = params.filter(el => (el.split('=')[0] === name) && el);
+                    if (found.length) return decodeURIComponent(found[0].split('=')[1]);
+                }
+                return "";
+            }
+
+            let url = "latest.json";
+            let request = new XMLHttpRequest();
+            request.open("get", url);
+            request.send(null);
+            request.onload = function () {
+                if (request.status === 200) {
+                    let json = JSON.parse(request.responseText);
+                    console.log(json);
+                    let server = json.server;
+                    let p = get('p');
+                    if (p === "") {
+                        window.location.replace("https://" + server + '/ccc');
+                    } else {
+                        window.location.replace("https://" + server + '/' + p);
+                    }
+                } else {
+                    console.log('read latest.json fail');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<noscript>
+    <p>
+        需要开启浏览器 Javascript 支持，或者请换一个浏览器试试
+    </p>
+</noscript>
+<h1>正在打开网站，请稍等片刻……</h1>
+</body>
+</html>
