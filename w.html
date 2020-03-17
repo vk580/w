@@ -16,14 +16,13 @@
                 return "";
             }
 
-            let url = "latest.json";
+            let url = "file.json";
             let request = new XMLHttpRequest();
             request.open("get", url);
             request.send(null);
             request.onload = function () {
                 if (request.status === 200) {
                     let json = JSON.parse(request.responseText);
-                    console.log(json);
                     let server = json.server;
                     let p = get('p');
                     if (p === "") {
@@ -32,7 +31,7 @@
                         window.location.replace("https://" + server + '/' + p);
                     }
                 } else {
-                    console.log('read latest.json fail');
+                    console.log('read file.json fail');
                 }
             }
         }
