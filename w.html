@@ -16,7 +16,7 @@
                 return "";
             }
 
-            let url = "file.json";
+            let url = "latest.json";
             let request = new XMLHttpRequest();
             request.open("get", url);
             request.send(null);
@@ -31,7 +31,7 @@
                         window.location.replace("https://" + server + '/' + p);
                     }
                 } else {
-                    console.log('read file.json fail');
+                    console.log('read latest.json fail');
                 }
             }
         }
