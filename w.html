@@ -16,13 +16,32 @@
                 return "";
             }
 
-            let url = "latest.json";
+            function get_latest_url() {
+                let urls = window.location.href.split('?')[0].replace("https://", "").split('/');
+                console.log(urls);
+                if (urls.length === 5) {
+                    urls[0] = 'raw.githubusercontent.com';
+                    urls[3] = 'master';
+                    urls[4] = 'latest.json';
+                    let latest = "https://";
+                    for (let i = 0; i < urls.length; i++) {
+                        latest += urls[i];
+                        if (i < 4) {
+                            latest += "/"
+                        }
+                    }
+                    return latest
+                }
+                return "latest.json";
+            }
+            let url = get_latest_url();
             let request = new XMLHttpRequest();
             request.open("get", url);
             request.send(null);
             request.onload = function () {
                 if (request.status === 200) {
-                    let json = JSON.parse(request.responseText);
+                    let data = window.atob( request.responseText );
+                    let json = JSON.parse(data);
                     let server = json.server;
                     let p = get('p');
                     if (p === "") {
