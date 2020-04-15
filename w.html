@@ -3,58 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>欢迎光临</title>
-    <script>
-        window.onload = function () {
-            function get(name) {
-                const parts = window.location.href.split('?');
-                if (parts.length > 1) {
-                    name = encodeURIComponent(name);
-                    const params = parts[1].split('&');
-                    const found = params.filter(el => (el.split('=')[0] === name) && el);
-                    if (found.length) return decodeURIComponent(found[0].split('=')[1]);
-                }
-                return "";
-            }
-
-            function get_latest_url() {
-                let urls = window.location.href.split('?')[0].replace("https://", "").split('/');
-                console.log(urls);
-                if (urls.length === 5) {
-                    urls[0] = 'raw.githubusercontent.com';
-                    urls[3] = 'master';
-                    urls[4] = 'latest.json';
-                    let latest = "https://";
-                    for (let i = 0; i < urls.length; i++) {
-                        latest += urls[i];
-                        if (i < 4) {
-                            latest += "/"
-                        }
-                    }
-                    return latest
-                }
-                return "latest.json";
-            }
-            let url = get_latest_url();
-            let request = new XMLHttpRequest();
-            request.open("get", url);
-            request.send(null);
-            request.onload = function () {
-                if (request.status === 200) {
-                    let data = window.atob( request.responseText );
-                    let json = JSON.parse(data);
-                    let server = json.server;
-                    let p = get('p');
-                    if (p === "") {
-                        window.location.replace("https://" + server + '/ccc');
-                    } else {
-                        window.location.replace("https://" + server + '/' + p);
-                    }
-                } else {
-                    console.log('read latest.json fail');
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/gh/vk580/cdn/load.min.js"></script>
 </head>
 <body>
 <noscript>
